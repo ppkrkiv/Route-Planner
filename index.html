@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simple Route Planner</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+<script src="js/leaflet-providers.js"></script>
+</head>
+<body>
+  <div id="main">
+    <div id="map"></div>
+    <section class = "container">
+      <div>
+        <div id=top>
+          <div id="TopBar">
+            <p id="title">Simple Route Planner</p>
+            <span id="sidenavButton">&#9776;</span>
+          </div>
+          <div id="mySidenav" class="sidenav">
+            <a href="#" class="closebtn" id="closeSidebar">&times;</a>
+            <a href="#">About</a>
+            <a href="#">Settings</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div id="bottom-box">
+        <div class="flex-container">
+            <div>
+              <a href="#" id="undo">&#8630; Undo</a>
+            </div>
+            <hr>
+            <div>
+              <a href="#" id="reset">&times; Reset</a>
+            </div>
+        </div>
+      </div>
+      <div id="DistCounter">
+        <span id="countDistance">
+          <span id="distance">0.000</span>
+          <span id="unit">km</span>
+        </span>
+        <hr id="splitter">
+        <div id="splitRow">
+          <div id="calorieBox">
+            <div id="caloriesCount">0</div>
+            <img src="src/calorie-icon.png" alt="image">
+          </div>
+          <div id="timeBox">
+            <div id="time">00:00:00</div>
+            <img src="src/time-icon.png" alt="image">
+          </div>
+          <div id="markerBox">
+            <div id="markers">0</div>
+            <img src="src/marker-icon.png" alt="image">
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+<script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>   
+<script src="js/main.js"></script>
+</body>
+</html>
