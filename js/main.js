@@ -7,11 +7,8 @@ var totalCalories = 0;
 var totalTime;
 var polylines = new Map();
 var markers = new Map();
-//Default speed in kph
-//!REMEMBER TO USE!
-//var speed = 5;
 
-//Figure the aspects a user should have
+
 let user = class {
 	constructor(weight, speed) {
 		this.weight = weight;
@@ -180,12 +177,7 @@ function countDistance() {
 }
 
 /* 
-The equation for the Exercise Calories Burned Calculator is:
-Duration of physical activity in 
-minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
-
-Running has MET value of 1 per every kph
-So for example running 10kph has the MET value of 10
+Based on the MET value
 */
 function countburnedCalories() {
 	let met = user.speed - 1;
