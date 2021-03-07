@@ -1,26 +1,36 @@
 "use strict";
 
-function main() {
-	mapSetup();
-	setButtonListeners();
-}
-
 var mymap;
 var route = [];
 var totalDistance;
+var totalCalories = 0;
+var totalTime;
 var polylines = new Map();
 var markers = new Map();
 //Default speed in kph
 //!REMEMBER TO USE!
-var speed = 5;
+//var speed = 5;
 
 //Figure the aspects a user should have
-class User{
+let user = class {
 	constructor(weight, speed) {
 		this.weight = weight;
 		this.speed = speed;
 	}
 }
+
+function main() {
+	mapSetup();
+	setDefaultUser(user);
+	setButtonListeners();
+}
+
+//defaults in km/h and kg
+function setDefaultUser(user) {
+	user.speed = 5;
+	user.weight = 75;
+}
+
 
 /**
  * Currently not in use due to insecure connection 
@@ -88,27 +98,14 @@ function resetRoute() {
 
 	route = [];
 	totalDistance = 0;
+	totalCalories = 0;
 	let p = document.querySelector('#distance');
 	p.textContent = "0.000";
 	let p2 = document.querySelector('#time');
 	p2.textContent = "00:00:00";
+	let p3 = document.querySelector('#caloriesCount');
+	p3.textContent = "0";
 	updateMarkerCount();
-}
-
-/* 
-The equation for the Exercise Calories Burned Calculator is:
-Duration of physical activity in 
-minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
-
-Running has MET value of 1 per every kph
-So for example running 10kph has the MET value of 10
-
-sources:
-Vuori I, Taimela S, Kujala U: Liikuntalääketiede. Kustannus Oy Duodecim 2012.
-Nikki Midland from betterme.world
-*/
-function countburnedCalories() {
-	return 0;
 }
 
 function updateMarkerCount() {
@@ -135,15 +132,11 @@ function removeLastMarker() {
 	}
 	countDistance();
 	countTime();
+	countburnedCalories();
 	updateMarkerCount();
 }
 
-function reset() {
-	route = [];
-	totalDistance;
-	polylines = new Map();
-	markers = new Map();
-}
+
 
 function onMapClick(e) {
 
@@ -161,6 +154,7 @@ function onMapClick(e) {
 		drawPolyline();
 		countDistance();
 		countTime();
+		countburnedCalories();
 	}
 	updateMarkerCount();
 }
@@ -185,15 +179,32 @@ function countDistance() {
 	p.textContent = totalDistance.toFixed(3);
 }
 
+/* 
+The equation for the Exercise Calories Burned Calculator is:
+Duration of physical activity in 
+minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
 
+Running has MET value of 1 per every kph
+So for example running 10kph has the MET value of 10
+*/
+function countburnedCalories() {
+	let met = user.speed - 1;
+	let weight = user.weight;
+	let time = totalTime.split(':');
+	let minutes = (+time[0]) * 60 + (+time[1]);
+	totalCalories = minutes * (met * 3.5 * weight) / 200;
+	let indicator = document.querySelector('#caloriesCount');
+	indicator.textContent = totalCalories.toFixed(0);
+}
 
 //Thanks to Andrew Willems for the time conversion snippet
 function countTime() {
-	let decimalTime = totalDistance/speed.toFixed(4);
+	let decimalTime = totalDistance/user.speed.toFixed(4);
 	var n = new Date(0,0);
 	n.setSeconds(+decimalTime * 60 * 60);
+	totalTime = n.toTimeString().slice(0, 8);
 	let timeIndicator = document.querySelector('#time');
-	timeIndicator.textContent = n.toTimeString().slice(0, 8);
+	timeIndicator.textContent = totalTime;
 }
 
 function addToRoute(lat, lng) {
